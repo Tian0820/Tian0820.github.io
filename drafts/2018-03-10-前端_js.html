@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="【前端】js篇"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Tian">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/drafts/2018-03-10-前端_js.html"/>
+
+
+<meta name="description" content="js继承：  https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain   三种创建对象方式：  对象字面量 1234var person1 = &amp;#123;    name: &amp;apos;st&amp;apos;,    age: 20&amp;#125;;     这样子构造出的对象">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【前端】js篇">
+<meta property="og:url" content="http://yoursite.com/drafts/2018-03-10-前端_js.html">
+<meta property="og:site_name" content="Tian">
+<meta property="og:description" content="js继承：  https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain   三种创建对象方式：  对象字面量 1234var person1 = &amp;#123;    name: &amp;apos;st&amp;apos;,    age: 20&amp;#125;;     这样子构造出的对象">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-03T01:37:10.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【前端】js篇">
+<meta name="twitter:description" content="js继承：  https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain   三种创建对象方式：  对象字面量 1234var person1 = &amp;#123;    name: &amp;apos;st&amp;apos;,    age: 20&amp;#125;;     这样子构造出的对象">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 【前端】js篇 - Tian </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Tian</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          【前端】js篇
+        
+      </h1>
+
+      <time class="post-time">
+          Jun 08 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <ul>
+<li><p>js继承：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain</a></li>
+</ul>
+</li>
+<li><p>三种创建对象方式：</p>
+<ul>
+<li><p>对象字面量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var person1 = &#123;</span><br><span class="line">    name: &apos;st&apos;,</span><br><span class="line">    age: 20</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>这样子构造出的对象，其[[prototype]]指向Object.prototype
+- 构造函数
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function Person()&#123;&#125;</span><br><span class="line">var person1 = new Person();</span><br></pre></td></tr></table></figure>
+
+
+通过new操作符调用的函数就是构造函数。由构造函数构造的对象，其[[prototype]]指向其构造函数的prototype属性指向的对象。每个函数都有一个prototype属性，其所指向的对象带有constructor属性，这一属性指向函数自身。（在本例中，person1的[[prototype]]指向Person.prototype）
+- Object.create
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var person1 = &#123;</span><br><span class="line">    name: &apos;cyl&apos;,</span><br><span class="line">    sex: &apos;male&apos;</span><br><span class="line">&#125;;</span><br><span class="line">var person2 = Object.create(person1);</span><br></pre></td></tr></table></figure>
+
+
+本例中，对象person2的[[prototype]]指向对象person1。在没有Object.create函数的日子里，人们是这样做的：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object.create = function(p) &#123;</span><br><span class="line">    function f()&#123;&#125;</span><br><span class="line">    f.prototype = p;</span><br><span class="line">    return new f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+然而虽然说[[prototype]]是一个隐藏属性，但很多浏览器都给每一个对象提供.__proto__这一属性，这个属性就是上文反复提到的该对象的[[prototype]]。由于这个属性不标准，因此一般不提倡使用。ES5中用Object.getPrototypeOf函数获得一个对象的[[prototype]]。ES6中，使用Object.setPrototypeOf可以直接修改一个对象的[[prototype]]
+
+作者：知乎用户
+
+链接：&lt;https://www.zhihu.com/question/34183746/answer/58068402&gt;
+
+来源：知乎
+
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+</code></pre><ul>
+<li><p>跨域：</p>
+<ul>
+<li>CORS跨域：<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/04/cors.html</a></li>
+</ul>
+</li>
+<li><p>浏览器同源： <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html</a></p>
+</li>
+<li><p>js 冒泡事件 捕获事件：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000005654451" target="_blank" rel="noopener">https://segmentfault.com/a/1190000005654451</a></li>
+<li><ol>
+<li><p>document 往 target节点，捕获前进，遇到注册的捕获事件立即触发执行</p>
+</li>
+<li><p>到达target节点，触发事件（对于target节点上，是先捕获还是先冒泡则捕获事件和冒泡事件的注册顺序，先注册先执行）</p>
+</li>
+<li><p>target节点 往 document 方向，冒泡前进，遇到注册的冒泡事件立即触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;s1&quot;&gt;s1</span><br><span class="line">    &lt;div id=&quot;s2&quot;&gt;s2&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">s1.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s1 冒泡事件&quot;);         </span><br><span class="line">&#125;,false);</span><br><span class="line">s2.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s2 冒泡事件&quot;);</span><br><span class="line">&#125;,false);</span><br><span class="line">        </span><br><span class="line">s1.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s1 捕获事件&quot;);</span><br><span class="line">&#125;,true);</span><br><span class="line">        </span><br><span class="line">s2.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;s2 捕获事件&quot;);</span><br><span class="line">&#125;,true);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>点击s2，click事件从document-&gt;html-&gt;body-&gt;s1-&gt;s2(捕获前进)</p>
+<p>这里在s1上发现了捕获注册事件，则输出”s1 捕获事件”</p>
+<p>到达s2，已经到达目的节点，</p>
+<p>s2上注册了冒泡和捕获事件，先注册的冒泡后注册的捕获，则先执行冒泡，输出”s2 冒泡事件”</p>
+<p>再在s2上执行后注册的事件，即捕获事件，输出”s2 捕获事件”</p>
+<p>下面进入冒泡阶段，按照s2-&gt;s1-&gt;body-&gt;html-&gt;documen(冒泡前进)</p>
+<p>在s1上发现了冒泡事件，则输出”s1 冒泡事件”</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="pagination">
+    
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">Tian.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'tian0820';
+  var disqus_identifier = 'drafts/2018-03-10-前端_js.html';
+
+  var disqus_title = "【前端】js篇";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

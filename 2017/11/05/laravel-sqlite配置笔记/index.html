@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Laravel+sqlite 后端+数据库配置"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Tian">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/11/05/laravel-sqlite配置笔记/"/>
+
+
+<meta name="description" content="Photour项目前端使用了vue.js框架，后端使用php，数据库使用sqlite。 配置环境：Mac 首先把php版本升级到7.11curl -s http://php-osx.liip.ch/install.sh \| bash -s 7.1 下载最新版的Composer1234php -r &amp;quot;copy(&amp;apos;https://getcomposer.org/installer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel+sqlite 后端+数据库配置">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/laravel-sqlite配置笔记/index.html">
+<meta property="og:site_name" content="Tian">
+<meta property="og:description" content="Photour项目前端使用了vue.js框架，后端使用php，数据库使用sqlite。 配置环境：Mac 首先把php版本升级到7.11curl -s http://php-osx.liip.ch/install.sh \| bash -s 7.1 下载最新版的Composer1234php -r &amp;quot;copy(&amp;apos;https://getcomposer.org/installer">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-08T05:41:37.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Laravel+sqlite 后端+数据库配置">
+<meta name="twitter:description" content="Photour项目前端使用了vue.js框架，后端使用php，数据库使用sqlite。 配置环境：Mac 首先把php版本升级到7.11curl -s http://php-osx.liip.ch/install.sh \| bash -s 7.1 下载最新版的Composer1234php -r &amp;quot;copy(&amp;apos;https://getcomposer.org/installer">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Laravel+sqlite 后端+数据库配置 - Tian </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Tian</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Laravel+sqlite 后端+数据库配置
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 05 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>Photour项目前端使用了vue.js框架，后端使用php，数据库使用sqlite。</p>
+<p>配置环境：Mac</p>
+<p>首先把php版本升级到7.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s http://php-osx.liip.ch/install.sh \| bash -s 7.1</span><br></pre></td></tr></table></figure></p>
+<p>下载最新版的Composer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php -r &quot;copy(&apos;https://getcomposer.org/installer&apos;, &apos;composer-setup.php&apos;);&quot;</span><br><span class="line">php -r &quot;if (hash_file(&apos;SHA384&apos;, &apos;composer-setup.php&apos;) === &apos;544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061&apos;) &#123; echo &apos;Installer verified&apos;; &#125; else &#123; echo &apos;Installer corrupt&apos;; unlink(&apos;composer-setup.php&apos;); &#125; echo PHP_EOL;&quot;</span><br><span class="line">php composer-setup.php</span><br><span class="line">php -r &quot;unlink(&apos;composer-setup.php&apos;);&quot;</span><br></pre></td></tr></table></figure></p>
+<p>(参考：<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">https://getcomposer.org/download/</a>)</p>
+<p>以上语句是局部安装，使用以下语句变为全局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv composer.phar /usr/local/bin/composer</span><br></pre></td></tr></table></figure></p>
+<p>修改镜像文件防止被墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer config -g repo.packagist composer https://packagist.phpcomposer.com</span><br></pre></td></tr></table></figure></p>
+<p>以上安装完composer，下面开始安装Laravel框架。<br>进入项目路径。<br>首先安装laravel安装器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require &quot;laravel/installer&quot;</span><br></pre></td></tr></table></figure></p>
+<p>用laravel生成新项目<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project laravel/laravel [project-name]</span><br></pre></td></tr></table></figure></p>
+<p>开启服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan serve</span><br></pre></td></tr></table></figure></p>
+<p>就可以在<a href="http://localhost:8000/" target="_blank" rel="noopener">http://localhost:8000/</a>看到laravel网页</p>
+<p>下面配置sqlite数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch database/database.sqlite</span><br></pre></td></tr></table></figure></p>
+<p>修改config文件夹下的database.php文件，去掉env(‘DB_DATABASE’)语句</p>
+<pre><code>&apos;sqlite&apos; =&gt; [
+          &apos;driver&apos; =&gt; &apos;sqlite&apos;,
+          &apos;database&apos; =&gt; database_path(&apos;database.sqlite&apos;),
+          &apos;prefix&apos; =&gt; &apos;&apos;,
+      ],
+</code></pre><p>修改.env文件，把DB_CONNECTION改为sqlite，DB_DATABASE改为本地数据库的路径<br>如下：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DB_CONNECTION=sqlite</span><br><span class="line">DB_HOST=127.0.0.1</span><br><span class="line">DB_PORT=3306</span><br><span class="line">DB_DATABASE=/Users/st/code/php/demo/database/database.sqlite</span><br><span class="line">DB_USERNAME=homestead</span><br><span class="line">DB_PASSWORD=secret</span><br></pre></td></tr></table></figure></p>
+<p>数据库配置完成。</p>
+<p>在数据库内建表等操作可以通过以下语句完成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure></p>
+<p>具体操作参考<a href="https://d.laravel-china.org/docs/5.5" target="_blank" rel="noopener">https://d.laravel-china.org/docs/5.5</a> laravel官方文档</p>
+<p>至此laravel框架配置完成，完美！！❤️❤️</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/12/laravel-使用Dingle-Api配置JWT/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Laravel + Dingle Api + JWT 用户认证</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/10/10/vue学习笔记/">
+        <span class="next-text nav-default">vue学习参考</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">Tian.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'tian0820';
+  var disqus_identifier = '2017/11/05/laravel-sqlite配置笔记/';
+
+  var disqus_title = "Laravel+sqlite 后端+数据库配置";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
