@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="web存储机制的比较"/>
+
+
+
+
+  <meta name="keywords" content="Vue.js," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Tian">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/"/>
+
+
+<meta name="description" content="web存储机制的比较">
+<meta name="keywords" content="Vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生日贺卡客户端存储登录态的技术方案">
+<meta property="og:url" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/index.html">
+<meta property="og:site_name" content="Tian">
+<meta property="og:description" content="web存储机制的比较">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie2.jpg">
+<meta property="og:updated_time" content="2018-06-15T06:16:19.272Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="生日贺卡客户端存储登录态的技术方案">
+<meta name="twitter:description" content="web存储机制的比较">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie1.jpg">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 生日贺卡客户端存储登录态的技术方案 - Tian </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Tian</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/photo">
+                            
+                            
+                                Photo
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          生日贺卡客户端存储登录态的技术方案
+        
+      </h1>
+
+      <time class="post-time">
+          Jun 12 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="几种web存储方案"><a href="#几种web存储方案" class="headerlink" title="几种web存储方案"></a>几种web存储方案</h2><p>Web 存储 API 提供了 sessionStorage （会话存储） 和 localStorage（本地存储）两个存储对象来对网页的数据进行添加、删除、修改、查询操作。<br>Cookie 是一些数据, 存储于你电脑上的文本文件中。当 web 服务器向浏览器发送 web 页面时，在连接关闭后，服务端不会记录用户的信息。</p>
+<p>总结来说，比较常用的就是三种机制：Cookie、localStorage 和 sessionStorage。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h4><p>Cookie是一小段文本信息，伴随着用户请求在 Web 服务器和浏览器之间传递。它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个 cookie。</p>
+<p>Cookie是存于用户硬盘的一个文件，这个文件通常对应于一个域名，也就是说，cookie可以跨越一个域名下的多个网页，但不能跨越多个域名使用。</p>
+<p>Cookie 以名/值对形式存储：</p>
+<p><code>username = ST</code> </p>
+<p>当浏览器从服务器上请求 web 页面时， 属于该页面的 cookie 会被添加到该请求中。服务端通过这种方式来获取用户的信息。</p>
+<h4 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h4><p>localStorage 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去除。</p>
+<h4 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h4><p>sessionStorage 用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期与 localStorage 不同。它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在。但当页面关闭后，sessionStorage 中的数据就会被清空。</p>
+<h2 id="针对存储登录态的优缺点比较"><a href="#针对存储登录态的优缺点比较" class="headerlink" title="针对存储登录态的优缺点比较"></a>针对存储登录态的优缺点比较</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Cookie</th>
+<th>localStorage</th>
+<th>sessionStorage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据大小</td>
+<td>4K</td>
+<td>5MB</td>
+<td>5MB</td>
+</tr>
+<tr>
+<td>生命周期</td>
+<td>可设置过期时间</td>
+<td>没有过期时间，直到手动去除</td>
+<td>在当前会话总存在，页面关闭后被清空</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>一旦被设置，就会被携带在每次请求头部，增加了请求时间</td>
+<td>可选择是否提交</td>
+<td>可选择是否提交</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>明文传递，可以被他人访问，容易被窃取</td>
+<td>明文存储，对 XSS 攻击没有抵御机制</td>
+<td>明文存储，对 XSS 攻击没有抵御机制</td>
+</tr>
+</tbody>
+</table>
+<p>在生日贺卡客户端中，如果要保存登录态，并保证用户下一次打开贺卡不需要重新登录，可以通过一串加密的身份验证的 token 来实现，这个 token 不会很大，并且每次打开贺卡和进行操作时都需要验证。同时，一段时间后需要清空登录状态，提醒用户重新登录。所以使用 cookie 存储比较合适。</p>
+<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>前端用户登录时，调用后端的登录方法，后端通过 JWT 机制生成一个 token，返回给前端，前端把这个 token 存储到 cookie 中，并设置过期时间。每次向后端发送请求时会把 cookie 携带在请求头部，后端取得 token 后验证身份，验证成功就不需要再次登录。</p>
+<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>可以通过设置 cookie 的 HttpOnly 属性，这样不能通过浏览器来修改带有 HttpOnly 属性的 cookie，只能通过服务器来修改，避免了 XSS 攻击。</p>
+<p>例如，在前端设置 cookie，把 username 设置为 test：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test&apos;</span><br></pre></td></tr></table></figure></p>
+<p>此时，在 chrome 浏览器中可以通过 JS 取得 cookie，并可以修改。</p>
+<img src="/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie1.jpg">
+<p>如果把 cookie 设置成 HttpOnly， 就可以避免这样的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test; HttpOnly&apos;</span><br></pre></td></tr></table></figure></p>
+<p>这样，chrome 就无法取得 key 为 username 的 cookie，也无法修改了。</p>
+<img src="/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie2.jpg">
+<h4 id="cookie-的-domain"><a href="#cookie-的-domain" class="headerlink" title="cookie 的 domain"></a>cookie 的 domain</h4><p>不同业务的子域名都不一样，但是根域名相同，在不同的域名下登录态需要相通。所以需要设置 cookie 的 domain 属性为根域名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test; HttpOnly; domain=.leanapp.cn&apos;</span><br></pre></td></tr></table></figure></p>
+<p>这样，a.leanapp.cn 和 b.leanapp.cn 和 a.b.leanapp.cn 都有这个 cookie。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Vue-js/">Vue.js</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/06/14/设计模式在Typescript的实践/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">设计模式在Typescript的实践（未完）</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/06/05/Vue-cli3.0+Node.js+leanCloud实战/">
+        <span class="next-text nav-default">Vue.js + TypeScript + Node.js + leanCloud 项目实战（未完）</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">Tian.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'tian0820';
+  var disqus_identifier = '2018/06/12/生日贺卡客户端存储登录态的技术方案/';
+
+  var disqus_title = "生日贺卡客户端存储登录态的技术方案";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":75,"height":150,"position":"right"},"mobile":{"show":false,"scale":0.25},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>

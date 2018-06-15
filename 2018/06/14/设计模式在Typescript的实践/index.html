@@ -12,12 +12,12 @@
 
 
 
-  <meta name="description" content="在 Vue.js 吃过的亏"/>
+  <meta name="description" content="设计模式在Typescript的实践（未完）"/>
 
 
 
 
-  <meta name="keywords" content="Vue.js," />
+  <meta name="keywords" content="TypeScript," />
 
 
 
@@ -32,21 +32,20 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/11/13/vue踩坑记录（不定期更新）/"/>
+<link rel="canonical" href="http://yoursite.com/2018/06/14/设计模式在Typescript的实践/"/>
 
 
-<meta name="description" content="在 Vue.js 吃过的亏">
-<meta name="keywords" content="Vue.js">
+<meta name="keywords" content="TypeScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue.js 踩坑记录">
-<meta property="og:url" content="http://yoursite.com/2017/11/13/vue踩坑记录（不定期更新）/index.html">
+<meta property="og:title" content="设计模式在Typescript的实践（未完）">
+<meta property="og:url" content="http://yoursite.com/2018/06/14/设计模式在Typescript的实践/index.html">
 <meta property="og:site_name" content="Tian">
-<meta property="og:description" content="在 Vue.js 吃过的亏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-08T08:44:24.961Z">
+<meta property="og:image" content="http://yoursite.com/2018/06/14/设计模式在Typescript的实践/TypeScript.png">
+<meta property="og:updated_time" content="2018-06-15T07:35:37.098Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vue.js 踩坑记录">
-<meta name="twitter:description" content="在 Vue.js 吃过的亏">
+<meta name="twitter:title" content="设计模式在Typescript的实践（未完）">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/14/设计模式在Typescript的实践/TypeScript.png">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -71,7 +70,7 @@
 
 
 
-    <title> Vue.js 踩坑记录 - Tian </title>
+    <title> 设计模式在Typescript的实践（未完） - Tian </title>
   </head>
 
   <body>
@@ -126,12 +125,12 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          Vue.js 踩坑记录
+          设计模式在Typescript的实践（未完）
         
       </h1>
 
       <time class="post-time">
-          Nov 13 2017
+          Jun 14 2018
       </time>
     </header>
 
@@ -139,16 +138,8 @@
 
     
             <div class="post-content">
-            <ul>
-<li><p>mutation中改变state值时，不能写为</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">    &apos;saveUser&apos;(state, &#123;user&#125;) &#123;</span><br><span class="line">        state = &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            user: user</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>  以上为Redux中的写法，应该直接写为</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">    &apos;saveUser&apos;(state, &#123;user&#125;) &#123;</span><br><span class="line">        state.user = user</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>data中不能取computed的值（mapState）<br><br>解决方案：使用props传递参数</li>
-</ul>
+            <img src="/2018/06/14/设计模式在Typescript的实践/TypeScript.png">
+<a id="more"></a>
 
             </div>
           
@@ -158,7 +149,7 @@
 		
 		<div class="post-tags">
 		  
-			<a href="/tags/Vue-js/">Vue.js</a>
+			<a href="/tags/TypeScript/">TypeScript</a>
 		  
 		</div>
 		
@@ -167,15 +158,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2018/06/05/Vue-cli3.0+Node.js+leanCloud实战/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">Vue.js + TypeScript + Node.js + leanCloud 项目实战（未完）</span>
-        <span class="prev-text nav-mobile">Prev</span>
-      </a>
     
-    
-      <a class="next" href="/2017/11/12/laravel-使用Dingle-Api配置JWT/">
-        <span class="next-text nav-default">Laravel + Dingle Api + JWT 用户认证</span>
+      <a class="next" href="/2018/06/12/生日贺卡客户端存储登录态的技术方案/">
+        <span class="next-text nav-default">生日贺卡客户端存储登录态的技术方案</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
@@ -229,9 +214,9 @@
 
 <script type="text/javascript">
   var disqus_shortname = 'tian0820';
-  var disqus_identifier = '2017/11/13/vue踩坑记录（不定期更新）/';
+  var disqus_identifier = '2018/06/14/设计模式在Typescript的实践/';
 
-  var disqus_title = "Vue.js 踩坑记录";
+  var disqus_title = "设计模式在Typescript的实践（未完）";
 
 
   var disqus = {
