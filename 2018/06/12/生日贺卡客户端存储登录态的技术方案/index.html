@@ -45,7 +45,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie2.jpg">
-<meta property="og:updated_time" content="2018-06-15T06:16:19.272Z">
+<meta property="og:updated_time" content="2018-07-14T02:19:11.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="生日贺卡客户端存储登录态的技术方案">
 <meta name="twitter:description" content="web存储机制的比较">
@@ -190,13 +190,13 @@
 <p>在生日贺卡客户端中，如果要保存登录态，并保证用户下一次打开贺卡不需要重新登录，可以通过一串加密的身份验证的 token 来实现，这个 token 不会很大，并且每次打开贺卡和进行操作时都需要验证。同时，一段时间后需要清空登录状态，提醒用户重新登录。所以使用 cookie 存储比较合适。</p>
 <h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>前端用户登录时，调用后端的登录方法，后端通过 JWT 机制生成一个 token，返回给前端，前端把这个 token 存储到 cookie 中，并设置过期时间。每次向后端发送请求时会把 cookie 携带在请求头部，后端取得 token 后验证身份，验证成功就不需要再次登录。</p>
 <h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>可以通过设置 cookie 的 HttpOnly 属性，这样不能通过浏览器来修改带有 HttpOnly 属性的 cookie，只能通过服务器来修改，避免了 XSS 攻击。</p>
-<p>例如，在前端设置 cookie，把 username 设置为 test：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test&apos;</span><br></pre></td></tr></table></figure></p>
+<p>例如，在前端设置 cookie，把 username 设置为 test：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.cookie = <span class="string">'username=test'</span></span><br></pre></td></tr></table></figure></p>
 <p>此时，在 chrome 浏览器中可以通过 JS 取得 cookie，并可以修改。</p>
 <img src="/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie1.jpg">
-<p>如果把 cookie 设置成 HttpOnly， 就可以避免这样的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test; HttpOnly&apos;</span><br></pre></td></tr></table></figure></p>
+<p>如果把 cookie 设置成 HttpOnly， 就可以避免这样的问题：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.cookie = <span class="string">'username=test; HttpOnly'</span></span><br></pre></td></tr></table></figure></p>
 <p>这样，chrome 就无法取得 key 为 username 的 cookie，也无法修改了。</p>
 <img src="/2018/06/12/生日贺卡客户端存储登录态的技术方案/cookie2.jpg">
-<h4 id="cookie-的-domain"><a href="#cookie-的-domain" class="headerlink" title="cookie 的 domain"></a>cookie 的 domain</h4><p>不同业务的子域名都不一样，但是根域名相同，在不同的域名下登录态需要相通。所以需要设置 cookie 的 domain 属性为根域名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &apos;username=test; HttpOnly; domain=.leanapp.cn&apos;</span><br></pre></td></tr></table></figure></p>
+<h4 id="cookie-的-domain"><a href="#cookie-的-domain" class="headerlink" title="cookie 的 domain"></a>cookie 的 domain</h4><p>不同业务的子域名都不一样，但是根域名相同，在不同的域名下登录态需要相通。所以需要设置 cookie 的 domain 属性为根域名：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.cookie = <span class="string">'username=test; HttpOnly; domain=.leanapp.cn'</span></span><br></pre></td></tr></table></figure></p>
 <p>这样，a.leanapp.cn 和 b.leanapp.cn 和 a.b.leanapp.cn 都有这个 cookie。</p>
 
             </div>
@@ -216,9 +216,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2018/06/14/设计模式在Typescript的实践/">
+      <a class="prev" href="/2018/07/14/寻人启事/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">设计模式在Typescript的实践（未完）</span>
+        <span class="prev-text nav-default">寻人启事</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     

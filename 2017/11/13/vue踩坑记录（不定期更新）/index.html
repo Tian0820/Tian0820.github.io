@@ -43,7 +43,7 @@
 <meta property="og:site_name" content="Tian">
 <meta property="og:description" content="在 Vue.js 吃过的亏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-08T08:44:24.961Z">
+<meta property="og:updated_time" content="2018-07-14T02:19:11.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 踩坑记录">
 <meta name="twitter:description" content="在 Vue.js 吃过的亏">
@@ -141,9 +141,9 @@
             <div class="post-content">
             <ul>
 <li><p>mutation中改变state值时，不能写为</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">    &apos;saveUser&apos;(state, &#123;user&#125;) &#123;</span><br><span class="line">        state = &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            user: user</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="string">'saveUser'</span>(state, &#123;user&#125;) &#123;</span><br><span class="line">        state = &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            user: user</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>  以上为Redux中的写法，应该直接写为</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">    &apos;saveUser&apos;(state, &#123;user&#125;) &#123;</span><br><span class="line">        state.user = user</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    <span class="string">'saveUser'</span>(state, &#123;user&#125;) &#123;</span><br><span class="line">        state.user = user</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
