@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="简单的性能分析"/>
+
+
+
+
+  <meta name="keywords" content="JavaScript,Performance," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Tian">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/10/30/C端性能分析/"/>
+
+
+<meta name="description" content="简单的性能分析">
+<meta name="keywords" content="JavaScript,Performance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C端性能分析">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/C端性能分析/index.html">
+<meta property="og:site_name" content="Tian">
+<meta property="og:description" content="简单的性能分析">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20161105135332839">
+<meta property="og:updated_time" content="2019-01-22T02:54:34.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C端性能分析">
+<meta name="twitter:description" content="简单的性能分析">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20161105135332839">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> C端性能分析 - Tian </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">Tian</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/photo">
+                            
+                            
+                                Photo
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          C端性能分析
+        
+      </h1>
+
+      <time class="post-time">
+          Oct 30 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="为什么关注性能"><a href="#为什么关注性能" class="headerlink" title="为什么关注性能"></a>为什么关注性能</h3><p>数据显示：</p>
+<ul>
+<li>应用首次工作出错以后， 79% 的用户只会再重试一两次。</li>
+<li>当应用载入时间超过 3 秒时， 25% 的用户会放弃使用该应用。</li>
+<li>31% 的用户会将糟糕的体验转告他人。</li>
+</ul>
+<p>由这些数据可以看出，性能在用户体验1方面有很大的影响，也直接影响了C端应用的质量。</p>
+<h3 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h3><p>具体可以从以下几个方面来分析性能：</p>
+<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><p>内存是影响用户直接交互体验的重要因素，它直接影响到 app 的使用流畅度。移动设备的内存资源非常有限，为每个APP进程分配的私有内存也是有限制。一方面要合理的申请内存使用，以免导致频繁的GC影响性能和大对象申请发生内存溢出；另一方面，要及时释放内存，以免发生内存泄漏。可以从内存峰值、内存均值、内存抖动、内存泄漏这几个方面进行考量。</p>
+<h4 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h4><p>与内存类似，CPU的占用影响了 app 的发热和卡顿，可以通过 CPU 峰值、CPU 均值这两个方面进行考量。</p>
+<h4 id="电量消耗"><a href="#电量消耗" class="headerlink" title="电量消耗"></a>电量消耗</h4><p>没有用户喜欢使用高耗电的 app，所以电量消耗在高性能方面也值得关注。</p>
+<h4 id="启动时间"><a href="#启动时间" class="headerlink" title="启动时间"></a>启动时间</h4><p>app 启动的整个过程，可以分解成下面几个步骤：</p>
+<ol>
+<li>用户在点击App Icon</li>
+<li>系统为 app 创建进程，显示启动窗口</li>
+<li>app 在进程中创建自己的组件</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20161105135332839" alt="img"></p>
+<p>图中可以看出，系统的进程分配以及一些窗口切换的动画效果等，都是跟系统相关的，无法优化。而可以优化的是 application 的创建过程。</p>
+<p>启动可以分为冷启动和热启动，冷启动是指当应用启动时，后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用。而热启动是指当应用已经被打开， 但是被按下返回键、home 键等按键回到桌面或者是其他程序的时候，再重新打开该app时， 这个方式叫做热启动（后台已经存在该应用进程）。冷启动时间较长，可能会出现长时间的白屏，所以现在很多应用采取添加闪屏的方式来优化用户体验。</p>
+<p>另外，启动优化也包括了页面的启动时间的考量，也就是页面的渲染时间，可以使用工具来监听这部分时间。</p>
+<h4 id="响应速度"><a href="#响应速度" class="headerlink" title="响应速度"></a>响应速度</h4><p>每个应用都应该快速地响应用户交互。一旦启动应用，用户总是希望它可以尽可能快地工作，一切必要的处理都应该在尽可能短的时间内完成。比如在照片应用中，用户通常希望看到调整亮度或对比度等简单效果的实时预览效果。 因此，相应的处理需要在几毫秒内完成。</p>
+<h4 id="UI性能"><a href="#UI性能" class="headerlink" title="UI性能"></a>UI性能</h4><p>人类大脑与眼睛对一个画面的连贯性感知是有一个界限的，比如电影帧率通常为 24fps，手机领域 （尤其是动画过渡）也需要感知屏幕操作的连贯性，Android/iOS 把达到这种流畅的帧率规定为 60fps。引起 UI 卡顿的常见原因有如下几种：</p>
+<ol>
+<li>主线程做了阻塞 UI 的耗时操作；</li>
+<li>同一时刻动画执行多次导致 GPU 和 CPU 过度绘制；</li>
+<li>View 过度绘制导致 GPU 和 CPU 过度绘制；</li>
+<li>频繁地进行布局绘制、文本计算等操作导致 View 需要重新渲染；</li>
+<li>频繁的对象创建和销毁；</li>
+<li>过度复杂的业务逻辑，耗时函数。</li>
+</ol>
+<p>可以对UI 重绘、滚动帧率、页面 ANR（Application Not Responding）等方面进行评测。</p>
+<h4 id="网络环境"><a href="#网络环境" class="headerlink" title="网络环境"></a>网络环境</h4><p>网络性能是一个 app 看不见的体验，国内网络环境错综复杂，要面对各种流量劫持和各种不稳定因素，所以，对于网络接口性能，也值得关注。例如复杂网络环境、接口往返时间、接口数据异常、CDN、服务器异常等方面，都是需要考虑的。需要考虑不同带宽和不同稳定情况的网络环境下 app 的响应。</p>
+<h4 id="用户行为"><a href="#用户行为" class="headerlink" title="用户行为"></a>用户行为</h4><p>收集用户行为路径，包括操作路径和页面停留时长等。通过对用户行为路径的分析，可以针对用户访问量大的内容进行集中优化，有助于提高优化效率。</p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>通过测量各种指标来分析应用的方式有两种：采样和埋点。</p>
+<h4 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h4><p>采样（或基于探测点的性能分析）是指以一定的周期间隔采集状态，通常需要借助工具。由于不会干扰应用的执行，采样可以很好地提供应用的全景图。采样的不足之处在于它不能返回 100% 精确的细节，如果采样的频率是 10 毫秒，那么就无法得知在探测点之间的 9.999 毫秒内发生了什么。</p>
+<h4 id="埋点"><a href="#埋点" class="headerlink" title="埋点"></a>埋点</h4><p>通过修改代码，记录细节信息的埋点能够提供比采样更加精确的结果。既可以在关键部分主动埋点，也可以在性能分析或处理用户反馈时有针对性地埋点，以便解决问题。因为埋点需要注入额外代码，所以它一定会影响应用的性能，对内存或速度 （或同时对二者）造成损害。</p>
+<hr>
+<p>参考博客：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/f7dc4044cccb" target="_blank" rel="noopener">高性能iOS开发 –&gt; 移动应用的性能</a></li>
+<li><a href="https://www.jianshu.com/p/0edb2e463b12" target="_blank" rel="noopener">移动端APM性能监控</a></li>
+<li><a href="https://blog.csdn.net/eclipsexys/article/details/53044990" target="_blank" rel="noopener">一触即发——App启动优化最佳实践</a></li>
+<li><a href="https://blog.csdn.net/suyimin2010/article/details/81659915" target="_blank" rel="noopener">携程移动端 UI 界面性能优化实践</a></li>
+<li><a href="https://segmentfault.com/a/1190000008676734" target="_blank" rel="noopener">移动APP性能测试指标</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/JavaScript/">JavaScript</a>
+		  
+			<a href="/tags/Performance/">Performance</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/09/04/JS执行shell命令/">
+        <span class="next-text nav-default">JS 执行 shell 命令</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2019
+    <span class="footer-author">Tian.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'tian0820';
+  var disqus_identifier = '2018/10/30/C端性能分析/';
+
+  var disqus_title = "C端性能分析";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":75,"height":150,"position":"right"},"mobile":{"show":false,"scale":0.25},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
